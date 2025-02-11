@@ -134,6 +134,13 @@ class UriTemplateTests {
 	}
 
 	@Test
+	void expandEncodedQueryParam() {
+		UriTemplate template = new UriTemplate("/hotel/?id={id}");
+		URI result = template.expand("Zurich hotel + spa");
+		assertThat(result).as("Invalid expanded template").isEqualTo(URI.create("/hotel/?id=Zurich%20hotel%20+%20spa"));
+	}
+
+	@Test
 	void matches() {
 		UriTemplate template = new UriTemplate("/hotels/{hotel}/bookings/{booking}");
 		assertThat(template.matches("/hotels/1/bookings/42")).as("UriTemplate does not match").isTrue();
